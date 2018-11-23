@@ -1,0 +1,48 @@
+﻿@model Rift.Models.Chamado
+@{
+    ViewBag.Title = "Alterar Chamado";
+}
+
+<h1>Alterar Chamado</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.IdChamado)
+    <div class="row">
+        <div class="col-md-3">
+            <label>Encerramento</label>
+            <input type="date" name="DataFechada" class="form-control" required value="@Model.DataFechada.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="col-md-3">
+            <label>Título</label>
+            @Html.EditorFor(m => m.Titulo, new { htmlAttributes = new { @class ="form-control", required=true,
+          maxlength=80} })
+        </div>
+        <div class="col-md-3">
+            <label>Status</label><br />
+            <select id="Status" name="Status">
+                <option value="@Model.Status">@Model.Status</option>
+                @if (Model.Status == "Em andamento")
+                {
+                    <option value="Concluída">Concluída</option>
+                }
+                else
+                {
+                    <option value="Em andamento">Em andamento</option>
+                }
+
+            </select>
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success"><img src="~/imagens/icons8-salvar-como-filled-50.png" /></button>
+    <a href="/Chamado/Index"><button type="button" class="btn btn-warning"><img src="~/imagens/icons8-esquerda-filled-50.png" /></button></a>
+}
+@if(ViewBag.Error!=null && ViewBag.Error != "")
+{
+    <script>
+        swal("Atenção", "@Html.Raw(ViewBag.Error)", "warning");
+        $("#Status").focus();
+    </script>
+}
+

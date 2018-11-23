@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Início";
+}
+<div>
+    <br />
+    <div class="row">
+        <div class="col-md-4">
+            <p id="p-home">Seja Bem Vindo @ViewBag.Nome</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <p id="p-home">Hoje é @DateTime.Now</p>
+        </div>
+    </div><br /><br /><br />
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <label style="margin-left:20px">Chamados Abertos</label><br /><br />
+            <div id="divqntchamados" class="btn btn-success"><br />
+                <span id="quantidadeChamado">@ViewBag.QuantidadeChamado</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label style="margin-left:35px">Clientes Ativos</label><br /><br />
+            <div id="divqntchamados" class="btn btn-primary"><br />
+                <span id="quantidadeChamado">@ViewBag.QuantidadeClientes</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label style="margin-right:60px">Quantidade Colaboradores</label><br /><br />
+            <div id="divqntchamados" class="btn btn-danger"><br />
+                <span id="quantidadeChamado">@ViewBag.QuantidadeColaboradores</span>
+            </div>
+        </div>
+</div>
+
+<style>
+    label {
+        color: #1E90FF;
+    }
+</style>

@@ -1,0 +1,45 @@
+﻿@model Rift.Models.Produto
+@{
+    ViewBag.Title = "Cadastrar Produto";
+}
+
+<h1>Cadastrar Produto</h1>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.IdProduto)
+    <div class="row">
+        <div class="col-md-3">
+            @Html.EditorFor(m => m.NomeProduto, new { HtmlAttributes = new { @class= "form-control", maxlength=100, required=true } } )
+        </div>
+        
+    </div><br />
+    <div class="row">
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
+        </div>
+        <div class="col-md-3">
+            <a href="/Produto/Index"> <button type="button" class="btn btn-warning">Voltar</button></a>
+        </div>
+    </div>
+}
+@if(ViewBag.Mensagem!=null && ViewBag.Mensagem != "")
+{
+    <script>
+        var mensagem = '@ViewBag.Mensagem';
+        if (mensagem == 'Produto Cadastrado com sucesso!') {
+            swal("Sucesso", mensagem, "success");
+            $("#NomeProduto").val('');
+            setTimeout(function () {
+                window.location.href = "/Produto/Index";
+            },4000);
+            
+        } else {
+            swal("Atenção", "@Html.Raw(ViewBag.Mensagem)", "warning");
+            $("#NomeProduto").val('');
+            
+        }
+    </script>
+
+}
+
+

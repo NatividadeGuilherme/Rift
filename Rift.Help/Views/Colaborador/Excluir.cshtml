@@ -1,0 +1,16 @@
+﻿@model Rift.Models.Colaborador
+@{
+    ViewBag.Title = "Excluir";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <label id="questionamentopreconfirmacao">Deseja realmente excluir?</label>
+    </div>
+    <div class="row">
+        <button type="submit" class="btn btn-danger"><img src="~/imagens/icons8-apagar-para-sempre-24 (1).png" /></button>
+        <a href="/Cliente"><button type="button" class="btn btn-warning"><img src="~/imagens/icons8-cancelar-24.png" /></button></a>
+    </div>
+}
+

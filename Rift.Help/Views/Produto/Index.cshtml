@@ -1,0 +1,66 @@
+﻿@model List<Rift.Models.Produto>
+@{
+    ViewBag.Title = "Index";
+}
+
+<a href="/Produto/CadastrarProduto"><button class="btn btn-primary">Cadastrar Produto</button></a>
+
+<h1>Lista de Produtos</h1>
+<div>
+    <table id="table-produtos" class="table table-bordered  table-hover tabela-produtos">
+        <thead>
+            <tr>
+                <th>Código Produto</th>
+                <th>Nome</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var produtos in Model)
+            {
+                <tr>
+                    <td>@produtos.IdProduto</td>
+                    <td>@produtos.NomeProduto</td>
+                    <td>
+                        <a href="@Url.Action("AlterarProduto", "Produto", new { IdProduto = produtos.IdProduto })" title="Alterar"><i class="fas fa-pencil-alt"></i></a>
+                        <a href="javascript:void" id="botaozinho" onclick="ApagarProduto(@produtos.IdProduto)"><i class="fas fa-times"></i></a>
+                        @*<a href="@Url.Action("Index","Produto", new { IdProduto=produtos.IdProduto})" title="Excluir"><img src="~/imagens/icons8-apagar-para-sempre-24 (1).png" /></a>*@
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#table-produtos').DataTable({
+            order: [[1, 'asc']],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+            }
+        }
+        );
+    });
+</script>
+@if (ViewBag.Mensagem != null && ViewBag.Mensagem != "")
+{
+    if(ViewBag.Mensagem=="Registro apagado")
+    {
+        <script>
+            swal("Sucesso", "Produto Excluído", "success");
+        </script>
+    }
+    else
+    {
+        <script>
+            swal("Atenção", "@Html.Raw(ViewBag.Mensagem)", "warning");
+        </script>
+    }
+
+
+
+}
+<script src="~/Scripts/JsProduto.js"></script>

@@ -1,0 +1,83 @@
+﻿@model List<Rift.Models.AcoesChamado>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="row">
+    <div class="col-md-1" id="divCriarAcao">
+        <a href="@Url.Action("CriarAcoesChamado","Acoes", new { IdChamado=ViewBag.IdChamado, Titulo = ViewBag.Titulo })"><button class="btn btn-success">Criar ação</button></a>
+    </div>
+    <div class="col-md-3">
+        <a href="/Chamado/Index"><button class="btn btn-warning">Voltar</button></a>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-5">
+        <span id="mensagem-statusconcluido"></span>
+    </div>
+</div>
+<br />
+<br />
+<h1>Lista de Ações do chamado: @ViewBag.Titulo </h1>
+<div>
+    <table id="table-acoes" class="table table-bordered  table-hover">
+        <thead>
+            <tr>
+                <th>Data Criação</th>
+                <th>Descriçao</th>
+                <th>Status</th>
+                <th>Colaborador</th>
+                <th>Ações</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var acoes in Model)
+            {
+                <tr>
+                    <td>@acoes.DataCriacao</td>
+                    <td>@acoes.Descricao</td>
+                    <td>@acoes.Status</td>
+                    <td>@acoes.Colaborador.Nome</td>
+                    <td id="campo-acoes">
+                        <a href="@Url.Action("AlterarAcoes","Acoes", new { IdAcoes = acoes.IdAcoes, Titulo = ViewBag.Titulo})" title="Alterar"><i class="fas fa-pencil-alt"></i></a>
+                        <a href="javascript:void" title="Excluir" onclick="ApagarAcoesChamado(@acoes.IdAcoes)"><i class="fas fa-times"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <button id="botaoFinalizar" type="button" class="btn btn-success" title="Finalizar Chamado" onclick="FinalizarChamado(@ViewBag.IdChamado)">Finalizar Chamado</button>
+    <script>
+        $(document).ready(function () {
+            $('#table-acoes').DataTable({
+                order: [[0, 'desc']],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+                }
+            }
+            );
+        });
+    </script>
+</div>
+@if (ViewBag.Mensagem != null && ViewBag.Mensagem != "")
+{
+    <script>
+        swal("Sucesso!", "@Html.Raw(ViewBag.Mensagem)", "success");
+    </script>
+}
+
+@if (ViewBag.Status == "Concluída")
+{
+    <script>
+        $("#divCriarAcao").remove();
+        $("#mensagem-statusconcluido").text("Este chamado está concluído!");
+        $("table #campo-acoes").css("display", "none");
+    </script>
+}
+
+
+<script src="~/Scripts/JsAcoesChamado.js"></script>

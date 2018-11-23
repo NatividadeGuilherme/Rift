@@ -1,0 +1,46 @@
+﻿@model Rift.Models.AcoesChamado
+@{
+   ViewBag.Title = "AlterarAcoes";
+}
+
+<h1>Alterar Ação</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.IdAcoes)
+    <div class="row">
+        <div class="col-md-6">
+            <textarea id="Descricao" name="Descricao" class="form-control" required maxlength="300" style="resize: none; height:320px">@Model.Descricao</textarea>    
+        </div>
+    </div><br />
+    <div class="row">
+        <div class="col-md-6">
+            @{
+                string status, status2;
+                if (Model.Status == "Aguardando Parecer da Rift")
+                {
+                    status = Model.Status;
+                    status2 = "Aguardando Cliente";
+                }
+                else
+                {
+                    status = Model.Status;
+                    status2 = "Aguardando Parecer da Rift";
+                }
+
+                <label>Status</label>
+                <select id="Status" name="Status">
+                    <option value="@status">@status</option>
+                    <option value="@status2">@status2</option>
+                </select>
+
+            }
+
+        </div>
+    </div>
+    <br />
+    <input type="submit" value="Alterar Ação" class="btn btn-success" />
+    <a href="@Url.Action("Index","Acoes", new { idChamado= Model.IdChamado, Titulo =  ViewBag.Titulo })"><button class="btn btn-warning" title="Voltar" type="button">Voltar</button></a>
+
+}
+

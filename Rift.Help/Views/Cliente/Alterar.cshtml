@@ -1,0 +1,106 @@
+﻿@model Rift.Models.Cliente
+@{
+    /**/
+
+    ViewBag.Title = "Alterar";
+}
+
+<h1>Alterar</h1>
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.IdCliente)
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Razão Social </label>
+            @Html.EditorFor(m => m.RazaoSocial, new { htmlAttributes = new { @class = "form-control", maxlength = 200 } })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Nome Fantasia </label><label id="campos-obrigatorios">*</label>
+            @Html.EditorFor(m => m.NomeFantasia, new { htmlAttributes = new { @class = "form-control", required = true, maxlength = 200 } })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>E-mail </label><label id="campos-obrigatorios">*</label>
+            @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", required = true, maxlength = 200, onblur = "validacaoEmail(Email)" } })
+            <label id="validarEmail"></label>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Telefone </label><label id="campos-obrigatorios">*</label>
+            @Html.EditorFor(m => m.Telefone, new { htmlAttributes = new { @class = "form-control mascara-telefones", required = true } })
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>CEP </label>
+            @Html.EditorFor(m => m.Cep, new { htmlAttributes = new { @class = "form-control tamanho-cep mascara-cep", maxlength = 9, onkeypress = "return Onlynumbers(event)" } })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Endereço </label>
+            @Html.EditorFor(m => m.Endereco, new { htmlAttributes = new { @class = "form-control", maxlength = 100 } })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Número </label>
+            @Html.EditorFor(m => m.Numero, new { htmlAttributes = new { @class = "form-control", maxlength = 100 } })
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Complemento</label>
+            @Html.EditorFor(m => m.Complemento, new { htmlAttributes = new { @class = "form-control", maxlength = 60 } })
+        </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Bairro</label>
+                @Html.EditorFor(m => m.Bairro, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Estado</label>
+                @Html.DropDownList("uf", new SelectList(ViewBag.Estados, "Uf", "Uf"), new { @class = "form-control", maxlenth = 60 })
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>Cidade</label><label id="campos-obrigatorios">*</label>
+                @Html.DropDownListFor(m => m.Cidade, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <p id="campos-obrigatorios">* Campos obrigatórios</p>
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success btn-sm" title="Cadastrar"><img src="~/imagens/icons8-salvar-como-filled-50.png" /></button>
+    <button type="reset" class="btn btn-warning" title="Limpar"><img src="~/imagens/icons8-vassoura-filled-50.png" /></button>
+
+
+}
+
+    <script>
+        $(document).ready(function () {
+            $('#Cidade').select2();
+        });
+    </script>
+
+
+<script src="~/Scripts/JSCadastro.js"></script>

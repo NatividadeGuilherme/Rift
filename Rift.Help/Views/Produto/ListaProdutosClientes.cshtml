@@ -1,0 +1,48 @@
+﻿@model List<Rift.Models.ProdutoCliente>
+@{
+    ViewBag.Title = "ListaProdutosClientes";
+}
+
+<a href="@Url.Action("IncluirProdutoNoCliente","Produto", new { IdCliente = ViewBag.Id, NomeCliente= ViewBag.Nome})"><button class="btn btn-primary" value="Adicionar Produto">Adicionar Produto</button></a>
+<h1>Lista de Produtos do @ViewBag.Nome </h1>
+
+<div>
+    <table id="table-produtosclientes" class="table table-bordered  table-hover">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var produtosCliente in Model)
+            {
+                <tr>
+                    <td>@produtosCliente.Produto.NomeProduto</td>
+                    <td>@produtosCliente.Status</td>
+                    <td>
+                        <a href="javascript:void()" title="Ativar/Inativar" onclick="ActivateProdutoCliente(@produtosCliente.IdProdutoCliente)"><i class="fas fa-power-off"></i></a>
+                        <a href="javascript:void()" title="Excluir" onclick="RemoverProdutoCliente(@produtosCliente.IdProdutoCliente)"><i class="fas fa-times"></i></a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+        
+        
+    </table>
+
+
+</div>
+<script>
+    $(document).ready(function () {
+        $('#table-produtosclientes').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+            }
+        }
+        );
+    });
+</script>
+<script src="~/Scripts/JsProdutoCliente.js"></script>

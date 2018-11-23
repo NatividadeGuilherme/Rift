@@ -1,0 +1,38 @@
+﻿@model Rift.Models.Produto
+@{
+    ViewBag.Title = "AlterarProduto";
+}
+
+<h1>Alterar Produto</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.IdProduto)
+    <div class="row">
+        <div class="col-md-3">
+            @Html.EditorFor(m => m.NomeProduto, new { HtmlAttributes = new { @class = "form-control", maxlength = 100, required = true } })
+        </div>
+        <div class="col-md-6">
+            <button type="submit" class="btn btn-success">Alterar Produto</button>
+        </div>
+    </div>
+}
+@if(ViewBag.Mensagem!=null && ViewBag.Mensagem != "")
+{
+    if(ViewBag.Mensagem== "Alteração efetuada")
+    {
+        <script>
+            swal("Sucesso", "Alteração efetuada", "success");
+            setTimeout(function () {
+                window.location.href = "/Produto/Index";
+            },4000);
+        </script>
+    }
+    else
+    {
+        <script>
+            swal("Atenção", "@Html.Raw(ViewBag.Mensagem)", "warning");
+        </script>
+    }
+}
+

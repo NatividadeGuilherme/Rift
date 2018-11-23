@@ -1,0 +1,54 @@
+﻿@model List<Rift.Models.Chamado>
+@{
+    ViewBag.Title = "Index";
+}
+<a href="/Chamado/CriarChamado"><button class="btn btn-primary">Novo chamado</button></a>
+<br />
+<br />
+<h1>Lista de Chamados</h1>
+<br />
+<div class="row">
+    <div class="col-md-3">
+        <label>Cliente</label>
+        @Html.DropDownList("ClienteIndex", new SelectList(ViewBag.Clientes, "IdCliente", "NomeFantasia"), "Todos", new { @class = "form-control", onchange = "BuscarChamados()" })
+    </div>
+    <div class="col-md-3">
+        <label>Produto</label>
+        @Html.DropDownList("ProdutoIndex", new SelectList(ViewBag.Produtos, "IdProduto", "NomeProduto"), "Todos", new { @class = "form-control", onchange = "BuscarChamados()" })
+    </div>
+</div>
+ 
+<br />
+<div>
+    <div id="divListaChamados">
+        @Html.Partial("_ListaDeChamados", Model)
+    </div>
+    
+    <script>
+        $(document).ready(function () {
+            $('#table-chamados').DataTable({
+                order: [[0, 'desc']],
+                    "language": {
+                        "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+                    }
+                }
+            );
+        });
+    </script>
+
+</div>
+
+@if (ViewBag.Mensagem != null && ViewBag.Mensagem != "")
+{
+    <script>
+        swal("Sucesso", "Chamado Criado", "success");
+    </script>
+}
+<script src="~/Scripts/JsChamado.js"></script>
+<script src="~/Scripts/JsChamadoIndex.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#ClienteIndex').select2();
+        $('#ProdutoIndex').select2();
+    });
+</script>

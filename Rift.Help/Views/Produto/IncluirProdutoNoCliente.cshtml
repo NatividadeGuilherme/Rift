@@ -1,0 +1,39 @@
+﻿@model Rift.Models.ProdutoCliente
+@{
+    ViewBag.Title = "IncluirProdutoNoCliente";
+}
+
+<h1>Adicionar Produtos</h1>
+<br />
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-3">
+            <label>Produto</label>
+            @Html.DropDownListFor(m => m.IdProduto, new SelectList(ViewBag.ListaProdutos, "IdProduto","NomeProduto"), new { HtmlAttributes = new { @class ="form-control", required=true } })
+        </div>
+    </div>
+    <br /> 
+    <div class="row">
+        <div class="col-md-5">
+            <input type="submit" value="Adicionar Produtos" class="btn btn-success" />
+            <a href="@Url.Action("ListaProdutosClientes","Produto", new { IdCliente= TempData["Id"], NomeCliente=  TempData["NomeCliente"] })"><button class="btn btn-warning" title="Voltar" type="button">Voltar</button></a>
+        </div>
+    </div>
+
+   
+}
+
+@if(ViewBag.Mensagem!=null && ViewBag.Mensagem != "")
+{
+    <script>
+        var mensagem = '@ViewBag.Mensagem';
+        if (mensagem == "Produto adicionado com sucesso!") {
+            swal("Produto Adicionado", "@ViewBag.Mensagem", "success"); 
+        } else {
+            swal("Atenção", "@Html.Raw(ViewBag.Mensagem)", "warning"); 
+        }
+
+    </script>
+}

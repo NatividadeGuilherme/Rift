@@ -1,0 +1,48 @@
+﻿@using Rift.Help.DAL;
+@model IEnumerable<Rift.Models.Chamado>
+@{
+    Layout = null;
+}
+<table id="table-chamados" class="table table-bordered  table-hover">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Título</th>
+            <th>Data Abertura</th>
+            <th>Produto</th>
+            <th>Cliente</th>
+            <th>Responsável</th>
+            <th>Status</th>
+            <th>Histórico última ação</th>
+            <th>Ações</th>
+
+        </tr>
+    </thead>
+
+    <tbody id="tabela-todoschamados">
+        @foreach (var chamados in Model)
+        {
+        <tr>
+            <td>@chamados.IdChamado</td>
+            <td>@chamados.Titulo</td>
+            <td>@chamados.DataAbertura</td>
+            <td>@chamados.Produt.NomeProduto</td>
+            <td>@chamados.Client.NomeFantasia</td>
+            <td>@chamados.Colaborad.Nome</td>
+            <td id="status-obrigatorio">@chamados.Status</td>
+           
+            <td id="status-acao">@chamados.UltimoStatusAcao</td> 
+            <td id="acoes-chamado">
+                <a href="@Url.Action("AlterChamado","Chamado", new { idChamado = chamados.IdChamado })" title="Alterar"><i class="fas fa-pencil-alt"></i></a>
+                
+                <a href="javascript:void()" id="botao" onclick="ApagarChamado(@chamados.IdChamado)" title="Apagar"><i class="fas fa-times"></i></a>
+                <a href="@Url.Action("Index","Acoes", new { idChamado = chamados.IdChamado, titulo=chamados.Titulo, status=chamados.Status })" title="Visualizar Ações"><i class="fas fa-list-ul"></i></a>
+              
+            </td>
+
+        </tr>
+        }
+    </tbody>
+
+</table>
+<script src="~/Scripts/JsChamadoIndex.js"></script>

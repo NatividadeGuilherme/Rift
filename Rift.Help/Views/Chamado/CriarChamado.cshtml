@@ -1,0 +1,40 @@
+﻿@model Rift.Models.Chamado
+@{
+    ViewBag.Title = "CriarChamado";
+}
+
+<h1>Criar Chamado</h1>
+<br />
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.IdChamado)
+    <div class="row">
+        <div class="col-md-3">
+            <label>Cliente</label><label id="campos-obrigatorios">*</label>
+            @Html.DropDownList("Cliente", new SelectList(ViewBag.TodosClientes, "IdCliente", "NomeFantasia"), "Selecione um Cliente", new { @class = "form-control", required = true })
+        </div>
+        <div class="col-md-3">
+            <label>Produto</label><label id="campos-obrigatorios">*</label>
+            @Html.DropDownListFor(m => m.Produto, new SelectList(Enumerable.Empty<SelectListItem>()) ,new
+            {@class= "form-control"})
+        </div>
+        <div class="col-md-3">
+            <label>Título</label><label id="campos-obrigatorios">*</label>
+            @Html.EditorFor(m => m.Titulo, new { htmlAttributes = new { @class = "form-control", required = true, maxlength = 80 } })
+        </div>
+    </div>
+    <br />
+    <p id="campos-obrigatorios">* Campos obrigatórios</p>
+    <br />
+    <input type="submit" value="Criar Chamado" class="btn btn-success" />
+    <a href="/Chamado/Index"><button type="button" class="btn btn-warning">Voltar</button></a>
+}
+
+<script src="~/Scripts/JsChamado.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#Cliente').select2();
+        $('#Produto').select2();
+    });
+</script>

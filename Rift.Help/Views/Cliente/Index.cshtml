@@ -1,0 +1,59 @@
+﻿@model List<Rift.Models.Cliente>
+@{
+    ViewBag.Title = "Clientes";
+}
+<br />
+<a href="/Cliente/Cadastrar"><button type="button" class="btn btn-primary" title="Cadastrar">Novo Cliente</button></a>
+<h1>Lista de Clientes</h1>
+
+<table id="table-clientes" class="table table-bordered  table-hover">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>CNPJ</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+            <th>Visualizar Produtos</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var clientes in Model)
+        {
+
+            <tr>
+                <td>@clientes.IdCliente</td>
+
+                <td>@clientes.NomeFantasia</td>
+
+                <td class="mascara-cnpj">@clientes.Cnpj</td>
+                <td class="mascara-telefones">@clientes.Telefone</td>
+                <td>
+                    <a href="@Url.Action("Alterar", "Cliente", new { IdCliente = clientes.IdCliente })" title="Alterar"><i class="fas fa-pencil-alt"></i></a>
+                    <a href="@Url.Action("Excluir", "Cliente", new { IdCliente = clientes.IdCliente })" title="Excluir"><i class="fas fa-times"></i></a>
+                </td>
+                <td>
+                    <a href="@Url.Action("ListaProdutosClientes","Produto", new { IdCliente = clientes.IdCliente, NomeCliente = clientes.NomeFantasia})" title="Visualizar Produtos"><i class="fas fa-list-ul"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function() {
+        $('#table-clientes').DataTable({
+            order:[[1,"asc"]],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
+                }
+            }
+        );
+    });
+</script>
+@if(ViewBag.Mensagem!=null && ViewBag.Mensagem != "")
+{
+    <script>
+        swal("Sucesso", "@Html.Raw(ViewBag.Mensagem)", "success");
+    </script>
+}

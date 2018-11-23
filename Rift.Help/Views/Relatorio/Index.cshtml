@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>Relatórios</h1>
+<br />
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-3">
+            <label>Data Inicial</label><label id="campos-obrigatorios">*</label>
+            @Html.Editor("dataInicial", new { htmlAttributes = new { @class="form-control",
+       type="date", required=true} })
+        </div>
+        <div class="col-md-3">
+            <label>Data Final</label><label id="campos-obrigatorios">*</label>
+            @Html.Editor("dataFinal", new { htmlAttributes = new { @class="form-control", type="date",
+       required=true} })
+        </div>
+        <div class="col-md-3">
+            <label>Cliente</label>
+            @Html.DropDownList("codigoDoCliente", new SelectList(ViewBag.ListaClientes, "IdCliente","NomeFantasia"), "Selecione um Cliente" ,new { htmlAttributes = new { @class="form-control" } } )
+        </div>
+        <div class="col-md-3">
+            <label>Produto</label><br />
+            @Html.DropDownList("codigoDoProduto", new SelectList(Enumerable.Empty<SelectListItem>()), new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+    <br />
+    <p id="campos-obrigatorios">* Campos obrigatórios</p>
+    <br />
+    <button type="submit" class="btn btn-success">Emitir relatório</button>
+
+}
+
+@if(ViewBag.Error!=null && ViewBag.Error != "")
+{
+    <script>
+        swal("Atenção","@Html.Raw(ViewBag.Error)","warning")
+    </script>
+}
+    <script src="~/Scripts/JsRelatorio.js"></script>

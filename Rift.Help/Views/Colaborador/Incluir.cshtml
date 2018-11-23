@@ -1,0 +1,138 @@
+﻿@model Rift.Models.Colaborador
+@{
+    ViewBag.Title = "Incluir";
+}
+
+<h1>Cadastro de Colaboradores</h1>
+<br />
+@using (Html.BeginForm("Incluir","Colaborador",FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.IdColaborador)
+    <div class="row">
+        <div class="col-md-3">
+            <label>CPF</label><label id="campos-obrigatorios">*</label>
+            @Html.EditorFor(m => m.Cpf, new { htmlAttributes = new { @class = "form-control mascara-cpf", maxlength = 14, required = true } })
+            <label id="validarCpforCnpj"></label>
+        </div>
+        <div class="col-md-3">
+            <label>Nome Colaborador</label><label id="campos-obrigatorios">*</label>
+            @Html.EditorFor(m => m.Nome, new { htmlAttributes = new { @class = "form-control", maxlength = 60, required = true } })
+        </div>
+        <div class="col-md-3">
+            <label>Data de Nascimento</label><label id="campos-obrigatorios">*</label>
+            @Html.EditorFor(m => m.DataNascimento, new { htmlAttributes = new { @class = "form-control", maxlength = 8, type = "date", required=true } })
+        </div>
+        <div class="col-md-3">
+            <label>E-mail</label><label id="campos-obrigatorios">*</label>
+            @Html.Editor("Email", new { htmlAttributes = new { @class = "form-control", maxlength = 180, required = true, onblur = "validacaoEmail(Email)" } })
+            <label id="validarEmail"></label>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-3">
+            <label>Senha</label><label id="campos-obrigatorios">*</label>
+            @Html.EditorFor(m => m.Senha, new { htmlAttributes = new { @class = "form-control", maxlength = 8, required = true, type = "password" } })
+        </div>
+        <div class="col-md-3">
+            <label>Celular</label><label id="campos-obrigatorios">*</label>
+            @Html.EditorFor(m => m.Celular, new { htmlAttributes = new { @class = "form-control mascara-celular", maxlength = 14, required = true } })
+        </div>
+        <div class="col-md-3">
+            <label>Telefone</label>
+            @Html.EditorFor(m => m.Telefone, new { htmlAttributes = new { @class = "form-control campo-telefone mascara-telefones", maxlength = 14 } })
+        </div>
+        <div class="col-md-3">
+            <label>Cep</label>
+            @Html.EditorFor(m => m.Cep, new { htmlAttributes = new { @class = "form-control mascara-cep", maxlength = 9, onkeypress="return Onlynumbers(event)" } })
+        </div>
+
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-3">
+            <label>Endereço</label>
+            @Html.EditorFor(m => m.Endereco, new { htmlAttributes = new { @class = "form-control", maxlength = 8 } })
+        </div>
+        <div class="col-md-3">
+            <label>Número</label>
+            @Html.EditorFor(m => m.Numero, new { htmlAttributes = new { @class = "form-control numero-colaborador", maxlength = 6 } })
+        </div>
+        <div class="col-md-3">
+            <label>Complemento</label>
+            @Html.EditorFor(m => m.Complemento, new { htmlAttributes = new { @class = "form-control", maxlength = 60 } })
+        </div>
+        <div class="col-md-3">
+            <label>Bairro</label>
+            @Html.EditorFor(m => m.Bairro, new { htmlAttributes = new { @class = "form-control", maxlength = 60 } })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-3">
+            <label>Uf</label>
+            @Html.DropDownList("uf", new SelectList(ViewBag.Estados, "Uf", "Uf"), new { @class = "form-control" })
+        </div>
+        <div class="col-md-3">
+            <label>Cidade</label>
+            @Html.DropDownListFor(m => m.Cidade, new SelectList(Enumerable.Empty<SelectListItem>()), new { @class = "form-control" })
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-3">
+            <p id="campos-obrigatorios">* Campos obrigatórios</p>
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success"><img src="~/imagens/icons8-salvar-como-filled-50.png" /></button>
+    <button type="reset" class="btn btn-warning"><img src="~/imagens/icons8-vassoura-filled-50.png" /></button>
+}
+<script src="~/Scripts/JSCadastro.js"></script>
+<script src="~/Scripts/JsColaborador.js"></script>
+@if (ViewBag.Error !=null && ViewBag.Error != "")
+{
+    <script>
+        var campoData = document.querySelector("#DataNascimento");
+        
+        swal("Atenção!", "@Html.Raw(ViewBag.Error)", "warning");
+
+        campoData.focus();
+    </script>
+}
+@if (ViewBag.Mensagem != null && ViewBag.Mensagem != "")
+{
+    <script>
+        swal("Deseja continuar cadastrando, ou ir para a listagem de colaboradores?",
+            {
+                buttons:
+                    {
+                        cancel: "Permanecer",
+                        catch:
+                            {
+                                text: "Listagem",
+                                value: "catch",
+                            },
+                    },
+            })
+            .then((value) => {
+                switch (value) {
+                    case "catch":
+                        window.location.href = location.origin+"/Colaborador/Index";
+                        break;
+
+                    default:
+                        swal("Sucesso!", "@Html.Raw(@ViewBag.Mensagem)", "success");
+                        
+                }
+                
+            });
+    </script>
+
+}
+
+    <script>
+        $(document).ready(function () {
+            $('#Cidade').select2();
+        });
+    </script>
